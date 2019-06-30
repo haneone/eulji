@@ -1343,7 +1343,7 @@ do i = 1, n_top_write
         endif
     enddo
     kNN_top_ranks(i)%p_value = kNN_top_ranks(i)%p_value + 1.0   ! if all possible permutation is performed, &
-									at least one(i.e. self) should satisfy ">=" condition
+								!	at least one(i.e. self) should satisfy ">=" condition
     kNN_top_ranks(i)%p_value = kNN_top_ranks(i)%p_value / float(n_resample_set)
 
 enddo
