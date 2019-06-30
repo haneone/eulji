@@ -991,11 +991,11 @@ if_D2: if (n_dim == 2) then
             do j = 1, n_sample                      ! for every sample for this picked SNP
                 do i_pick = 1, n_dim
                     picked_g(i_pick) = genotype_array(j,SNP_pick(i_pick))   ! data format: phenotype genotype (ascending order  &
-									      in phenotype)
+									    !  in phenotype)
                 enddo
 
                 if ((picked_g(1) >= 0).AND.(picked_g(2) >=0)) then          ! valid genotype = 0, 1, 2 (invalid genotype such as &
-									      missing data is encode as -9)
+									    ! missing data is encode as -9)
                     n_sample_valid = n_sample_valid + 1                     ! increment of number of valid sample
                     gt_count = 0                                            ! initializing the gt_combi assignment
                     put_gt_combi_D2: do g1 = 0, n_gt-1
@@ -1050,11 +1050,11 @@ if_D3: if (n_dim == 3) then
                 do j = 1, n_sample                  ! for every sample for this picked SNP
                     do i_pick = 1, n_dim
                         picked_g(i_pick) = genotype_array(j,SNP_pick(i_pick))   ! data format: phenotype genotype (ascending &
-										  order in phenotype)
+										! order in phenotype)
                     enddo
 
                     if ((picked_g(1) >= 0).AND.(picked_g(2) >=0).AND.(picked_g(3) >=0)) then  ! valid genotype = 0, 1, 2 &
-												(invalid genotype such as missing data is encode as -9)
+											      ! (invalid genotype such as missing data is encode as -9)
                         n_sample_valid = n_sample_valid + 1                     ! increment of number of valid sample
                         gt_count = 0                                            ! initializing the gt_combi assignment
                         put_gt_combi_D3: do g1 = 0, n_gt-1
@@ -1065,7 +1065,7 @@ if_D3: if (n_dim == 3) then
                                         exit put_gt_combi_D3                    ! no need to find further
                                     else
                                         gt_count = gt_count + 1                 ! examine the next number for proper gt_combi &
-										 assignment
+										! assignment
                                     endif
                                 enddo
                             enddo
