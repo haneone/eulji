@@ -960,7 +960,8 @@ if_D1: if (n_dim == 1) then
         enddo
 
 ! estimate the GxP association for this ptcular SNP combi    
-        call estimate_kNN_MI(flag_resample,n_sample_valid,SNP_pick,sample_Id_array,GT_array,log_rho_table,old_kNN_MI_max,new_kNN_MI_max)
+        call estimate_kNN_MI(flag_resample,n_sample_valid,SNP_pick,sample_Id_array,GT_array,log_rho_table,old_kNN_MI_max, & 
+			     new_kNN_MI_max)
         old_kNN_MI_max = new_kNN_MI_max
         
     enddo do_pick_D1
@@ -989,10 +990,12 @@ if_D2: if (n_dim == 2) then
 
             do j = 1, n_sample                      ! for every sample for this picked SNP
                 do i_pick = 1, n_dim
-                    picked_g(i_pick) = genotype_array(j,SNP_pick(i_pick))   ! data format: phenotype genotype (ascending order in phenotype)
+                    picked_g(i_pick) = genotype_array(j,SNP_pick(i_pick))   ! data format: phenotype genotype (ascending order  &
+									      in phenotype)
                 enddo
 
-                if ((picked_g(1) >= 0).AND.(picked_g(2) >=0)) then          ! valid genotype = 0, 1, 2 (invalid genotype such as missing data is encode as -9)
+                if ((picked_g(1) >= 0).AND.(picked_g(2) >=0)) then          ! valid genotype = 0, 1, 2 (invalid genotype such as &
+									      missing data is encode as -9)
                     n_sample_valid = n_sample_valid + 1                     ! increment of number of valid sample
                     gt_count = 0                                            ! initializing the gt_combi assignment
                     put_gt_combi_D2: do g1 = 0, n_gt-1
@@ -1013,7 +1016,8 @@ if_D2: if (n_dim == 2) then
             enddo
 
 ! estimate the GxP association for this ptcular SNP combi    
-            call estimate_kNN_MI(flag_resample,n_sample_valid,SNP_pick,sample_Id_array,GT_array,log_rho_table,old_kNN_MI_max,new_kNN_MI_max)
+            call estimate_kNN_MI(flag_resample,n_sample_valid,SNP_pick,sample_Id_array,GT_array,log_rho_table,old_kNN_MI_max, &
+				 new_kNN_MI_max)
             old_kNN_MI_max = new_kNN_MI_max
 
         enddo
@@ -1045,10 +1049,12 @@ if_D3: if (n_dim == 3) then
 
                 do j = 1, n_sample                  ! for every sample for this picked SNP
                     do i_pick = 1, n_dim
-                        picked_g(i_pick) = genotype_array(j,SNP_pick(i_pick))   ! data format: phenotype genotype (ascending order in phenotype)
+                        picked_g(i_pick) = genotype_array(j,SNP_pick(i_pick))   ! data format: phenotype genotype (ascending &
+										  order in phenotype)
                     enddo
 
-                    if ((picked_g(1) >= 0).AND.(picked_g(2) >=0).AND.(picked_g(3) >=0)) then  ! valid genotype = 0, 1, 2 (invalid genotype such as missing data is encode as -9)
+                    if ((picked_g(1) >= 0).AND.(picked_g(2) >=0).AND.(picked_g(3) >=0)) then  ! valid genotype = 0, 1, 2 &
+												(invalid genotype such as missing data is encode as -9)
                         n_sample_valid = n_sample_valid + 1                     ! increment of number of valid sample
                         gt_count = 0                                            ! initializing the gt_combi assignment
                         put_gt_combi_D3: do g1 = 0, n_gt-1
@@ -1058,7 +1064,8 @@ if_D3: if (n_dim == 3) then
                                         put_gt_combi = gt_count                 ! proper number of gt_combi found
                                         exit put_gt_combi_D3                    ! no need to find further
                                     else
-                                        gt_count = gt_count + 1                 ! examine the next number for proper gt_combi assignment
+                                        gt_count = gt_count + 1                 ! examine the next number for proper gt_combi &
+										 assignment
                                     endif
                                 enddo
                             enddo
@@ -1071,7 +1078,8 @@ if_D3: if (n_dim == 3) then
                 enddo
 
 ! estimate the GxP association for this ptcular SNP combi    
-                call estimate_kNN_MI(flag_resample,n_sample_valid,SNP_pick,sample_Id_array,GT_array,log_rho_table,old_kNN_MI_max,new_kNN_MI_max)
+                call estimate_kNN_MI(flag_resample,n_sample_valid,SNP_pick,sample_Id_array,GT_array,log_rho_table, &
+					old_kNN_MI_max,new_kNN_MI_max)
                 old_kNN_MI_max = new_kNN_MI_max
 
             enddo
@@ -1091,7 +1099,8 @@ end subroutine get_kNN_MI
 ! subroutine estimate_kNN_MI
 !*******************************************************************************
 
-subroutine estimate_kNN_MI(flag_resample,n_sample_valid,SNP_pick,sample_Id_array,GT_array,log_rho_table,old_kNN_MI_max,new_kNN_MI_max)
+subroutine estimate_kNN_MI(flag_resample,n_sample_valid,SNP_pick,sample_Id_array,GT_array,log_rho_table,old_kNN_MI_max, &
+			new_kNN_MI_max)
 
 use stuffs
 
@@ -1333,7 +1342,8 @@ do i = 1, n_top_write
             kNN_top_ranks(i)%p_value = kNN_top_ranks(i)%p_value + 1.0
         endif
     enddo
-    kNN_top_ranks(i)%p_value = kNN_top_ranks(i)%p_value + 1.0   ! if all possible permutation is performed, at least one(i.e. self) should satisfy ">=" condition
+    kNN_top_ranks(i)%p_value = kNN_top_ranks(i)%p_value + 1.0   ! if all possible permutation is performed, &
+									at least one(i.e. self) should satisfy ">=" condition
     kNN_top_ranks(i)%p_value = kNN_top_ranks(i)%p_value / float(n_resample_set)
 
 enddo
